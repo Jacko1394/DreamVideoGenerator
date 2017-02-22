@@ -1,0 +1,8 @@
+If you really need a scripted python solution, you can look into using PIL
+But if you just want to easily convert a sequence of png images to a movie, you can simply use ffmpeg:
+
+ffmpeg -f image2 -r 1/5 -i image%05d.png -vcodec mpeg4 -y movie.mp4
+
+This command takes images with 5 digit padding (image00001.png) and compresses them into
+a mpeg4 quicktime, at a rate of holding each frame for 5 seconds.
+You could do a different fps if your images are greater: -r 24 (24 frames per second)
