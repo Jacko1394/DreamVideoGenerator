@@ -1,23 +1,23 @@
-import os
+import os, sys
+from re import split
 from ffmpy import FFmpeg
 from PIL import Image
-#import mechanize
+import mechanize
 
-myInput = 'IMG_0697.mov'
-myOutput = os.getcwd() + '/Frames/'
+name = split('\.', sys.argv[1])
+myOutput = os.getcwd() + '/' + name[0] + ' Frames/'
+del name
 
-print('sup')
-'''
+#'''
 if not os.path.exists(myOutput):
     os.makedirs(myOutput)
 
 ff = FFmpeg(
-    inputs={myInput: None},
+    inputs={sys.argv[1]: None},
     outputs={None: [myOutput + "frame%04d.bmp"]}
 )
 
 ff.run()
-del ff
 
 for i in range(1, 9999):
 
@@ -30,10 +30,10 @@ for i in range(1, 9999):
         os.remove(frame + '.bmp')
     else:
         break
-'''
+#'''
 ff = FFmpeg(
-    inputs={myOutput + 'frame%04d.jpg': None},
-    outputs={'test.mp4': ['-r', "60"]}
+    inputs={myOutput + 'frame%04d.jpg': ["-framerate", sys.argv[2]]},
+    outputs={'test.mp4': None}
 )
 
 ff.run()
